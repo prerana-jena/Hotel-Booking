@@ -3,17 +3,17 @@ import {Webhook} from "svix";
 const clerkWebhookSecret=async(req,res)=>{
     try{
         const whook=new Webhook(process.env.CLERK_WEBHOOK_SECRET);
-        const headers={
-                svixid:req.headers["svix-id"],
-                svixtimestamp:req.headers["svix-timestamp"],
-                svixsignature:req.headers["svix-signature"]
-        };
+        const headers = {
+  "svix-id": req.headers["svix-id"],
+  "svix-timestamp": req.headers["svix-timestamp"],
+  "svix-signature": req.headers["svix-signature"],
+};
         await whook.verify(JSON.stringify(req.body),headers);
         const {type,data}=req.body; 
         const userData ={
             _id: data.id,
             email: data.email_addresses[0].email_address,
-            usename: data.first_name+" "+data.last_name,
+            username: data.first_name+" "+data.last_name,
             image: data.image_url,
 
         }
